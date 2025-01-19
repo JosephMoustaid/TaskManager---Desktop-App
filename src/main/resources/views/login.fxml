@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #11111;" styleClass="login" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Login Form Container -->
+    <VBox alignment="CENTER" layoutX="134.0" layoutY="83.0" prefHeight="178.0" prefWidth="335.0" spacing="20" styleClass="login">
+        <!-- Title -->
+        <Text fill="WHITE" text="Login" wrappingWidth="65.08631801605225">
+            <font>
+                <Font name="Arial" size="24" />
+            </font>
+        </Text>
+
+        <!-- Username Field -->
+        <HBox spacing="10">
+            <TextField fx:id="usernameField" prefHeight="36.0" prefWidth="337.0" promptText="Enter your username" styleClass="text-field" />
+        </HBox>
+
+        <!-- Password Field -->
+        <HBox spacing="10">
+            <PasswordField fx:id="passwordField" prefHeight="36.0" prefWidth="339.0" promptText="Enter your password" styleClass="text-field" />
+        </HBox>
+
+        <!-- Error Message (hidden by default) -->
+        <Text fx:id="errorMessage" fill="red" text="Invalid username or password" visible="false" />
+    </VBox>
+
+     <!-- Login Button -->
+     <Button fx:id="loginButton" layoutX="175.0" layoutY="252.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 250;" text="Login" />
+   <Hyperlink layoutX="175.0" layoutY="292.0" text="or Create an account " />
+
+</AnchorPane>

@@ -1,0 +1,103 @@
+/* Add a light background color to the task list */
+/* -----------------Index----------------- */
+.anchor-pane {
+    -fx-background-color: #3f3f3f;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-fill: #ffffff;
+}
+.list-view {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+.sidebar {
+    -fx-padding: 40 0 50 0; /* top right bottom left */
+    -fx-fill: white;
+    -fx-background-color: #333333 !important;
+}
+.Heading{
+    -fx-fill: white;
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+.board{
+    -fx-background-color: #333333;
+    -fx-fill: white;
+    -fx-alignment: start;
+}
+.btn-primary{
+    -fx-background-color: #007bff;
+    -fx-fill: #ffffff;
+    -fx-border-color: #007bff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+
+}
+.board-button {
+
+    -fx-fill: #ffffff !important;
+    -fx-background-color: #333333;
+    -fx-size: 11;
+    -fx-border-radius: 0 0 0 0; /* top-left top-right bottom-right bottom-left */
+    -fx-background-radius: 0 0 0 0; /* top-left top-right bottom-right bottom-left */
+    -fx-alignment: start;
+    -fx-margin: 0 0 10 0;
+    -fx-border-width: 2; /* top right bottom left */
+    -fx-border-color: transparent transparent #838383 transparent; /* top right bottom left */
+    -fx-cursor: hand; /* Change cursor on hover */
+    -fx-transition: all 0.3s ease; /* Add transition for smooth animation */
+}
+
+.board-button:hover {
+    -fx-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+    -fx-background-color: #444444; /* Slightly change background color on hover */
+}
+/* Button style */
+.button {
+    -fx-background-radius: 10;
+    -fx-padding: 8 15;
+
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.button:pressed {
+    -fx-background-color: #387d3e;
+}
+/* -----------------Login----------------- */
+.login{
+    -fx-background-color: #333333;
+    -fx-fill: white;
+    -fx-alignment: center;
+}
+.label{
+    -fx-fill: white;
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+.text-field{
+    -fx-background-color: #4d4d4d;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-fill: #ffffff;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+}
+/* -----------------Signup----------------- */
+.signup{
+    -fx-background-color: #333333;
+    -fx-fill: white;
+    -fx-alignment: center;
+}
+/* -----------------Add task----------------- */
+
+/* -----------------Edit task----------------- */
