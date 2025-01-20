@@ -71,6 +71,60 @@
 .button:pressed {
     -fx-background-color: #387d3e;
 }
+.tasks-container {
+    -fx-background-color: #414141;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 5 5 5 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 4); /* Add box shadow */
+}
+
+.task-container {
+    -fx-background-color: #545454;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6 6 6 6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 4); /* Add box shadow */
+}
+
+
+/* task-card style */
+.task-card {
+    -fx-fill: #ffffff !important;
+    -fx-spacing: 5;
+}
+
+/* task-title style */
+.task-title {
+    -fx-fill: #ffffff !important;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* task-description style */
+.task-description {
+    -fx-fill: rgba(255, 255, 255, 0.77) !important;
+    -fx-font-size: 12px;
+}
+
+/* task-timestamp style */
+.task-timestamp {
+    -fx-font-size: 10px;
+    -fx-text-fill: #0068f6;
+}
+
+/* task-priority style */
+.task-priority {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ff0000; /* Red for high priority */
+}
+
+/* task-status style */
+.task-status {
+    -fx-font-size: 12px;
+    -fx-text-fill: #00aa00; /* Green for in progress */
+}
+
 /* -----------------Login----------------- */
 .login{
     -fx-background-color: #333333;
