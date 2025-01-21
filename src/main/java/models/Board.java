@@ -86,7 +86,7 @@ public class Board implements Serializable {
 
     private StatusFilter inProgressFilter = new StatusFilter(Status.IN_PROGRESS);
     private StatusFilter completeFilter = new StatusFilter(Status.COMPLETE);
-    private StatusFilter pendingFilter = new StatusFilter(Status.PENDING);
+    private StatusFilter notStartedFilter = new StatusFilter(Status.NOT_STARTED);
 
     private PriorityFilter lowPriorityFilter = new PriorityFilter(Priority.LOW);
     private PriorityFilter mediumPriorityFilter = new PriorityFilter(Priority.MEDIUM);
@@ -129,8 +129,11 @@ public class Board implements Serializable {
         return false;
     }
 
+    public Set<Task> getTasks() {
+        return tasks;
+    }
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
@@ -150,8 +153,8 @@ public class Board implements Serializable {
 
 
 
-    public Set<Task> getPendingTasks() {
-        return tasks.stream().filter(pendingFilter::filter).collect(Collectors.toSet());
+    public Set<Task> getNotStartedTasks() {
+        return tasks.stream().filter(notStartedFilter::filter).collect(Collectors.toSet());
     }
     public Set<Task> getIinProgressTasks() {
         return tasks.stream().filter(inProgressFilter::filter).collect(Collectors.toSet());

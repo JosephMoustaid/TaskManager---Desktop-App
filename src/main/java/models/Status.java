@@ -1,5 +1,5 @@
 package models;
 
 public enum Status {
-    PENDING, IN_PROGRESS, COMPLETE
+    NOT_STARTED, IN_PROGRESS, COMPLETE
 }
