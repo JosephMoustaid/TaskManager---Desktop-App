@@ -38,6 +38,8 @@ import models.Board;
 import utils.Database;
 public class TaskController {
 
+    @FXML
+    private Text selectedBord;
 
     @FXML
     private VBox boardsContainer; // VBox to hold dynamic board buttons
@@ -216,24 +218,32 @@ public class TaskController {
     private void displayTasksForBoard(Board board) {
         if (board == null || board.getTasks() == null || board.getTasks().isEmpty()) {
             System.out.println("No tasks found for the board: " + "board" + board.getId());
+
+            selectedBord.setText("Board " + board.getId()); // Update the selected board text
+
+            timeChunk1.getChildren().clear(); // Clear 12 AM - 6 AM
+            timeChunk2.getChildren().clear(); // Clear 6 AM - 12 PM
+            timeChunk3.getChildren().clear(); // Clear 12 PM - 6 PM
+            timeChunk4.getChildren().clear();
             return;
         }
 
         // Debug: Print the number of tasks in the board
         System.out.println("Number of tasks in board " + board.getId() + ": " + board.getTasks().size());
 
+        selectedBord.setText("Board " + board.getId()); // Update the selected board text
+
         // Clear all time chunks before adding new tasks
-        timeChunk1.getChildren().clear();
-        timeChunk2.getChildren().clear();
-        timeChunk3.getChildren().clear();
-        timeChunk4.getChildren().clear();
+        timeChunk1.getChildren().clear(); // Clear 12 AM - 6 AM
+        timeChunk2.getChildren().clear(); // Clear 6 AM - 12 PM
+        timeChunk3.getChildren().clear(); // Clear 12 PM - 6 PM
+        timeChunk4.getChildren().clear(); // Clear 6 PM - 12 AM
 
         // Loop through each task and add it to the appropriate time chunk
         for (Task task : board.getTasks()) {
             Map<String, Date> dateTime = task.getDateTime();
 
-            System.out.println("Task: " + task.toString());
-            // Debug: Print the dateTime map and its values
+            // Debug: Print the task and its dateTime map
             System.out.println("Task: " + task.getTitle());
             System.out.println("DateTime: " + dateTime);
 
@@ -244,12 +254,11 @@ public class TaskController {
                 System.out.println("endTime: " + dateTime.get("end_time"));
             }
 
-
             Date startTime = dateTime != null ? dateTime.get("start_time") : null;
 
             // Skip tasks with null startTime
             if (startTime == null) {
-                System.out.println("Skipping task with null start_time: " + task.getTitle());
+                System.out.println("Skipping task with null startTime: " + task.getTitle());
                 continue;
             }
 
@@ -258,18 +267,18 @@ public class TaskController {
             // Debug: Print task details
             System.out.println("Task: " + task.getTitle() + ", Start Time: " + startTime);
 
+
             if (hour >= 0 && hour < 6) {
-                timeChunk1.getChildren().add(createTaskCard(task));
+                timeChunk1.getChildren().add(createTaskCard(task)); // Add to 12 AM - 6 AM
             } else if (hour >= 6 && hour < 12) {
-                timeChunk2.getChildren().add(createTaskCard(task));
+                timeChunk2.getChildren().add(createTaskCard(task)); // Add to 6 AM - 12 PM
             } else if (hour >= 12 && hour < 18) {
-                timeChunk3.getChildren().add(createTaskCard(task));
+                timeChunk3.getChildren().add(createTaskCard(task)); // Add to 12 PM - 6 PM
             } else {
-                timeChunk4.getChildren().add(createTaskCard(task));
+                timeChunk4.getChildren().add(createTaskCard(task)); // Add to 6 PM - 12 AM
             }
         }
     }
-
 
     private void handleCreateNewBoard() {
         // Logic to create a new board

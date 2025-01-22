@@ -104,6 +104,9 @@
       <!-- Tasks Container -->
       <HBox prefWidth="600.0" spacing="10" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="90.0">
          <children>
+
+            
+
             <!-- 12 AM - 6 AM -->
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" HBox.hgrow="ALWAYS">
                <content>
@@ -135,5 +138,6 @@
       </HBox>
 
       <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="312.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="selectedBord" fill="WHITE" layoutX="170.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ Text" wrappingWidth="57.10101318359375" />
    </children>
 </AnchorPane>
