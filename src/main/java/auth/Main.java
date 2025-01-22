@@ -1,4 +1,4 @@
-package auth.Main;
+package auth;
 
 import models.User;
 import utils.DatabaseConnection;

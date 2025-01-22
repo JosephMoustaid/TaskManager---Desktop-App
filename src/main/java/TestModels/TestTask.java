@@ -1,4 +1,4 @@
-package Test;
+package TestModels;
 
 import models.Task;
 
@@ -18,8 +18,8 @@ public class TestTask {
         dateTime.put("endDate", new Date());
         dateTime.put("endTime", new Date());
 
-        Task task1 = new Task("1", "Test Task", "This is a test task", dateTime, Priority.MEDIUM, Status.PENDING, "1");
-        Task task2 = new Task("1", "Test Task", "This is a test task", dateTime, Priority.MEDIUM, Status.PENDING, "1");
+        Task task1 = new Task("1", "Test Task", "This is a test task", dateTime, Priority.MEDIUM, Status.NOT_STARTED, "1");
+        Task task2 = new Task("1", "Test Task", "This is a test task", dateTime, Priority.MEDIUM, Status.NOT_STARTED, "1");
         Task task3 = new Task("2", "Another Task", "This is another test task", dateTime, Priority.HIGH, Status.IN_PROGRESS, "2");
 
         System.out.println(task1.toString());

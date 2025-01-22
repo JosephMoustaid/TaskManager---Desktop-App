@@ -11,31 +11,78 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SettingsController">
     <children>
         <!-- Sidebar VBox -->
         <VBox prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: #555555;" styleClass="sidebar">
             <children>
+                <!-- Title -->
                 <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Heading" text="Task Manager" textAlignment="CENTER" wrappingWidth="147.03957557678223" />
-                <Hyperlink alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="150.0" text="+ new board" textAlignment="CENTER" />
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                <Button fx:id="CreateNewBoardButton" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="184.0" style="-fx-border-radius: 0;" styleClass="board-button" text="New Board" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/add.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
 
                 <!-- Buttons inside VBox -->
-                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="147.0" style="-fx-border-radius: 0;" styleClass="board-button" text="Board 1" textFill="WHITE">
+                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="156.0" style="-fx-border-radius: 0;" styleClass="board-button" text="Board 1" textFill="WHITE">
                     <AnchorPane.leftAnchor>0</AnchorPane.leftAnchor>
                     <AnchorPane.rightAnchor>0</AnchorPane.rightAnchor>
-                    <AnchorPane.topAnchor>200</AnchorPane.topAnchor> <!-- Added some space -->
+                    <AnchorPane.topAnchor>200</AnchorPane.topAnchor>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/icons8-board-50.png" />
+                            </image>
+                        </ImageView>
+                    </graphic> <!-- Added some space -->
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="149.0" styleClass="board-button" text="Board 2" textFill="WHITE">
+                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="159.0" styleClass="board-button" text="Board 2" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                     <AnchorPane.leftAnchor>0</AnchorPane.leftAnchor>
                     <AnchorPane.rightAnchor>0</AnchorPane.rightAnchor>
-                    <AnchorPane.topAnchor>240</AnchorPane.topAnchor> <!-- Added some space -->
+                    <AnchorPane.topAnchor>240</AnchorPane.topAnchor>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/icons8-board-50.png" />
+                            </image>
+                        </ImageView>
+                    </graphic> <!-- Added some space -->
                 </Button>
-                <Hyperlink fx:id="SignOutLink" alignment="BOTTOM_RIGHT" onAction="#handleClickSignOut" prefHeight="91.0" prefWidth="149.0" text="Sign out" textAlignment="RIGHT" />
-                <Hyperlink />
+
+
+                <!-- Settings Button with Icon -->
+                <Button fx:id="settingsButton" alignment="CENTER_RIGHT"  prefHeight="40.0" prefWidth="184.0" style="-fx-border-radius: 0;" styleClass="board-button" text="Settings" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/white-settings.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <AnchorPane.leftAnchor>0</AnchorPane.leftAnchor>
+                    <AnchorPane.rightAnchor>0</AnchorPane.rightAnchor>
+                    <AnchorPane.topAnchor>280</AnchorPane.topAnchor> <!-- Adjust position as needed -->
+                </Button>
+                <Button fx:id="SignOutLink" alignment="CENTER_RIGHT" onAction="#handleClickSignOut" prefHeight="40.0" prefWidth="184.0" style="-fx-border-radius: 0;" styleClass="board-button" text="Sign Out" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/icons8-logout-50.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </children>
 
             <!-- Anchoring VBox to top and bottom of the AnchorPane to make it full height -->

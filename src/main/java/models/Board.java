@@ -10,6 +10,7 @@ public class Board implements Serializable {
     private String id;
     private Set<Task> tasks ;
     private Set<Notification> notifications;
+    private String userId; // Add this field
 
 
     class TitleFilter implements models.Filter , Serializable{
@@ -98,12 +99,19 @@ public class Board implements Serializable {
         notifications = new HashSet<Notification>();
     }
 
-
+    public Board(String id, String userId) {
+        this();
+        this.id = id;
+        this.userId = userId;
+    }
     public Board(String id) {
         this();
         this.id = id;
     }
 
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
     public boolean addTask(Task task) {
         if (task == null) {
             throw new IllegalArgumentException("Task cannot be null");
@@ -127,6 +135,13 @@ public class Board implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Set<Task> getTasks() {
@@ -178,6 +193,7 @@ public class Board implements Serializable {
     public String toString() {
         return "Board{" +
                 "id='" + id + '\n' +
+                ", userId='" + userId + '\n' +
                 ", tasks= \n \t" + tasks.stream().map(Task::toString).collect(Collectors.joining(", \n \t")) +
                 ",\n notifications= \n \t" + notifications.stream().map(Notification::toString).collect(Collectors.joining(",  \n \t")) +
                 '}';

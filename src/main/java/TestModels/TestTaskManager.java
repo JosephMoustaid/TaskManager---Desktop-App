@@ -1,4 +1,4 @@
-package Test;
+package TestModels;
 
 import models.Board;
 import models.TaskManager;

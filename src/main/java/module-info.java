@@ -1,13 +1,16 @@
 module TaskManagerApp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
+    requires java.sql;
+    requires org.json;
 
-    // Open TaskManager and controllers to javafx.fxml for reflection-based access
-    opens TaskManager to javafx.fxml;
+    // Export the TaskManager package to javafx.graphics
+    exports TaskManager to javafx.graphics;
 
-    // Export TaskManager to javafx.graphics
-    exports TaskManager;
+    // Open the controllers package to javafx.fxml for reflection-based access
+    opens controllers to javafx.fxml;
 
-    // Optionally open views if you have them
-    opens views;
+    // Open the views package to javafx.fxml (if your FXML files are in this package)
+    opens views to javafx.fxml;
 }

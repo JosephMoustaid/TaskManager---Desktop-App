@@ -6,9 +6,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="views.TasksDisplay"
-            prefHeight="400.0" prefWidth="600.0" >
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-</AnchorPane>
+
+<HBox fx:id="taskDisplayContainer" prefWidth="600.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TaskDisplayController">
+    <children>
+        <!-- 12 AM - 6 AM -->
+        <VBox fx:id="timeChunk1" prefHeight="298.0" styleClass="tasks-container" HBox.hgrow="ALWAYS" />
+
+        <!-- 6 AM - 12 PM -->
+        <VBox fx:id="timeChunk2" prefHeight="298.0" styleClass="tasks-container" HBox.hgrow="ALWAYS" />
+
+        <!-- 12 PM - 6 PM -->
+        <VBox fx:id="timeChunk3" prefHeight="298.0" styleClass="tasks-container" HBox.hgrow="ALWAYS" />
+
+        <!-- 6 PM - 12 AM -->
+        <VBox fx:id="timeChunk4" prefHeight="298.0" styleClass="tasks-container" HBox.hgrow="ALWAYS" />
+    </children>
+</HBox>
+
+
+

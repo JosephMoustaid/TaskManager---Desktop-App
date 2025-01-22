@@ -1,4 +1,4 @@
-package Test;
+package TestModels;
 
 import models.Board;
 import models.Task;
@@ -14,7 +14,7 @@ public class TestBoard {
         Board board = new Board("1");
 
         // Create some tasks
-        Task task1 = new Task("1", "Task 1", "Description 1", null, Priority.HIGH, Status.PENDING, "Category1");
+        Task task1 = new Task("1", "Task 1", "Description 1", null, Priority.HIGH, Status.NOT_STARTED, "Category1");
         Task task2 = new Task("2", "Task 2", "Description 2", null, Priority.MEDIUM, Status.IN_PROGRESS, "Category1");
         Task task3 = new Task("3", "Task 3", "Description 3", null, Priority.LOW, Status.COMPLETE, "Category2");
 
@@ -54,12 +54,12 @@ public class TestBoard {
             System.out.println("testGetTasksByTitle passed ✅");
         }
 
-        // Test getPendingTasks
-        Set<Task> pendingTasks = board.getPendingTasks();
-        if (pendingTasks.size() != 0) { // task1 was removed, so no pending tasks
-            System.out.println("testGetPendingTasks failed ❌");
+        // Test getNotStartedTasks
+        Set<Task> notStartedTasksTasks = board.getNotStartedTasks();
+        if (notStartedTasksTasks.size() != 0) { // task1 was removed, so no pending tasks
+            System.out.println("testgetNotStartedTasks failed ❌");
         } else {
-            System.out.println("testGetPendingTasks passed ✅");
+            System.out.println("testgetNotStartedTasks passed ✅");
         }
 
         // Test getInProgressTasks
