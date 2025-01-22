@@ -19,6 +19,11 @@
                 <Font size="19.0" />
             </font>
         </Label>
+        <ChoiceBox fx:id="boardChoice" prefHeight="26.0" prefWidth="250.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList" />
+            </items>
+        </ChoiceBox>
         <TextField fx:id="taskTitle" promptText="Task Title" />
         <TextField fx:id="taskDescription" promptText="Task Description" />
 
@@ -27,30 +32,7 @@
         <ChoiceBox fx:id="startTime" prefHeight="26.0" prefWidth="243.0" styleClass=".cell" stylesheets="@../styles/style.css" value="08:00 AM">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="12:00 AM" />
-                    <String fx:value="01:00 AM" />
-                    <String fx:value="02:00 AM" />
-                    <String fx:value="03:00 AM" />
-                    <String fx:value="04:00 AM" />
-                    <String fx:value="05:00 AM" />
-                    <String fx:value="06:00 AM" />
-                    <String fx:value="07:00 AM" />
-                    <String fx:value="08:00 AM" />
-                    <String fx:value="09:00 AM" />
-                    <String fx:value="10:00 AM" />
-                    <String fx:value="11:00 AM" />
-                    <String fx:value="12:00 PM" />
-                    <String fx:value="01:00 PM" />
-                    <String fx:value="02:00 PM" />
-                    <String fx:value="03:00 PM" />
-                    <String fx:value="04:00 PM" />
-                    <String fx:value="05:00 PM" />
-                    <String fx:value="06:00 PM" />
-                    <String fx:value="07:00 PM" />
-                    <String fx:value="08:00 PM" />
-                    <String fx:value="09:00 PM" />
-                    <String fx:value="10:00 PM" />
-                    <String fx:value="11:00 PM" />
+
                 </FXCollections>
             </items>
         </ChoiceBox>
@@ -59,30 +41,7 @@
         <ChoiceBox fx:id="endTime" prefHeight="26.0" prefWidth="245.0" style="-fx-fill: #ffffff; -fx-text-fill: #ffffff;" styleClass="arrow" value="08:00 AM">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="12:00 AM" />
-                    <String fx:value="01:00 AM" />
-                    <String fx:value="02:00 AM" />
-                    <String fx:value="03:00 AM" />
-                    <String fx:value="04:00 AM" />
-                    <String fx:value="05:00 AM" />
-                    <String fx:value="06:00 AM" />
-                    <String fx:value="07:00 AM" />
-                    <String fx:value="08:00 AM" />
-                    <String fx:value="09:00 AM" />
-                    <String fx:value="10:00 AM" />
-                    <String fx:value="11:00 AM" />
-                    <String fx:value="12:00 PM" />
-                    <String fx:value="01:00 PM" />
-                    <String fx:value="02:00 PM" />
-                    <String fx:value="03:00 PM" />
-                    <String fx:value="04:00 PM" />
-                    <String fx:value="05:00 PM" />
-                    <String fx:value="06:00 PM" />
-                    <String fx:value="07:00 PM" />
-                    <String fx:value="08:00 PM" />
-                    <String fx:value="09:00 PM" />
-                    <String fx:value="10:00 PM" />
-                    <String fx:value="11:00 PM" />
+
                 </FXCollections>
             </items>
         </ChoiceBox>
@@ -109,6 +68,9 @@
         </ChoiceBox>
 
         <Button onAction="#saveTask" styleClass="btn-primary" text="Save Task" textFill="WHITE" />
+
+
+
     </VBox>
 
 </AnchorPane>

@@ -375,6 +375,95 @@ public class Database {
             return false;
         }
     }
+
+    public static boolean updateTask(Task task) {
+        if (task == null) {
+            return false;
+        }
+
+        String query;
+        if (taskExists(task.getId())) {
+            // Update existing task
+            query = "UPDATE tasks SET title = ?, description = ?, date_time = ?::jsonb, priority = ?::priority, status = ?::status, category_id = ?, user_id = ? WHERE id = ?";
+        } else {
+            // Insert new task
+            query = "INSERT INTO tasks (title, description, date_time, priority, status, category_id, user_id) VALUES (?, ?, ?::jsonb, ?::priority, ?::status, ?, ?)";
+        }
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            // Set task details
+            statement.setString(1, task.getTitle());
+            statement.setString(2, task.getDescription());
+
+            // Convert date_time map to JSON
+            JSONObject dateTimeJson = new JSONObject();
+            Map<String, Date> dateTime = task.getDateTime();
+            if (dateTime != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+                dateTimeJson.put("start_date", dateFormat.format(dateTime.get("start_date")));
+                dateTimeJson.put("start_time", timeFormat.format(dateTime.get("start_time")));
+                dateTimeJson.put("end_date", dateFormat.format(dateTime.get("end_date")));
+                dateTimeJson.put("end_time", timeFormat.format(dateTime.get("end_time")));
+            }
+            statement.setString(3, dateTimeJson.toString()); // Set JSONB data as a string
+
+            // Cast priority and status to their respective enum types
+            statement.setString(4, task.getPriority().toString());
+            statement.setString(5, task.getStatus().toString());
+            statement.setInt(6, Integer.parseInt(task.getCategoryId()));
+            statement.setInt(7, Integer.parseInt(task.getUserId())); // Set user_id
+
+            if (taskExists(task.getId())) {
+                statement.setInt(8, Integer.parseInt(task.getId())); // For UPDATE, set the task ID
+            }
+
+            // Execute the query
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0; // Return true if the operation was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteTask(Task task) {
+        if (task == null) {
+            return false;
+        }
+
+        // Step 1: Delete the task from the tasks table
+        String deleteTaskQuery = "DELETE FROM tasks WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(deleteTaskQuery)) {
+
+            statement.setInt(1, Integer.parseInt(task.getId())); // Set the task ID
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                // Step 2: Remove the task from all boards
+                Set<Board> boards = loadBoards(); // Load all boards
+                for (Board board : boards) {
+                    // Check if the board contains the task
+                    if (board.getTasks().removeIf(t -> t.getId().equals(task.getId()))) {
+                        // If the task was removed, update the board in the database
+                        saveBoard(board);
+                    }
+                }
+
+                return true; // Task deleted successfully
+            } else {
+                return false; // Task not found in the database
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private static boolean taskExists(String taskId) {
         String query = "SELECT id FROM tasks WHERE id = ?";
         try (Connection connection = DatabaseConnection.getConnection();

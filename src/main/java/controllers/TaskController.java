@@ -39,6 +39,9 @@ import utils.Database;
 public class TaskController {
 
     @FXML
+    private  Button cancelButton;
+
+    @FXML
     private Text selectedBord;
 
     @FXML
@@ -292,7 +295,7 @@ public class TaskController {
     }
 
 
-    private HBox createTaskCard(Task task) {
+    private HBox createTaskCard( Task task) {
         // Create the task card layout
         HBox taskCard = new HBox();
         taskCard.setStyle("-fx-background-color: #444; -fx-padding: 10; -fx-spacing: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
@@ -349,29 +352,45 @@ public class TaskController {
         Text status = new Text("Status: " + task.getStatus());
         status.setStyle("-fx-fill: white; -fx-font-size: 12;");
 
+        // Add check emoji if the task is complete
+        if (task.getStatus() == Status.COMPLETE) {
+            Text checkEmoji = new Text(" ✅"); // Add a check emoji
+            checkEmoji.setStyle("-fx-fill: white; -fx-font-size: 12;");
+            HBox statusContainer = new HBox(status, checkEmoji); // Combine status and emoji
+            statusContainer.setSpacing(5); // Add spacing between status and emoji
+            taskDetails.getChildren().add(statusContainer); // Add the combined container to taskDetails
+        } else {
+            taskDetails.getChildren().add(status); // Add only the status if not complete
+        }
+
         // Add details to the VBox
-        taskDetails.getChildren().addAll(title, description, timestamp, priority, status);
+        taskDetails.getChildren().addAll(title, description, timestamp, priority);
 
         // Buttons (Edit and Delete)
         HBox buttonContainer = new HBox();
         buttonContainer.setSpacing(5);
-        buttonContainer.setAlignment(Pos.BOTTOM_RIGHT);
+        buttonContainer.setAlignment(Pos.BOTTOM_CENTER); // Center buttons at the bottom
 
         // Edit Button
         Button editButton = new Button("Edit");
         editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-cursor: hand; -fx-padding: 5 10;");
-        editButton.setOnAction(event -> editTask());
+        editButton.setOnAction(event -> editTask(task));
 
         // Delete Button
         Button deleteButton = new Button("Delete");
         deleteButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white; -fx-cursor: hand; -fx-padding: 5 10;");
-        deleteButton.setOnAction(event -> deleteTask());
+        deleteButton.setOnAction(event -> deleteTask(task));
 
         // Add buttons to the button container
         buttonContainer.getChildren().addAll(editButton, deleteButton);
 
-        // Add priority rectangle, task details, and buttons to the task card
-        taskCard.getChildren().addAll(priorityRectangle, taskDetails, buttonContainer);
+        // Create a VBox to hold task details and buttons
+        VBox mainContainer = new VBox();
+        mainContainer.setSpacing(10);
+        mainContainer.getChildren().addAll(taskDetails, buttonContainer); // Add buttons at the bottom
+
+        // Add priority rectangle and main container to the task card
+        taskCard.getChildren().addAll(priorityRectangle, mainContainer);
 
         // Set spacing and alignment
         taskCard.setSpacing(10);
@@ -380,6 +399,7 @@ public class TaskController {
 
         return taskCard;
     }
+
     private String formatDateTimeSimple(Date startDate, Date startTime, Date endDate, Date endTime) {
         if (startDate == null || startTime == null || endDate == null || endTime == null) {
             return "N/A"; // Handle null dates/times gracefully
@@ -418,10 +438,19 @@ public class TaskController {
     }
 
     @FXML
-    public void editTask() {
+    public void editTask(Task task) {
         try {
+            // Load the FXML file for the edit task dialog
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/editTaskDialog.fxml"));
             Parent parent = fxmlLoader.load();
+
+            // Get the controller for the edit task dialog
+            EditTaskController editTaskDialogController = fxmlLoader.getController();
+
+            // Pass the selected task to the edit task dialog
+            editTaskDialogController.setTask(task);
+
+            // Set up the stage
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Task Dialog");
@@ -433,7 +462,8 @@ public class TaskController {
     }
 
     @FXML
-    public void deleteTask() {
+    private void deleteTask(Task task) {
+        // Show a confirmation dialog before deleting the task
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Task");
         alert.setHeaderText("Are you sure you want to delete this task?");
@@ -441,7 +471,27 @@ public class TaskController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            System.out.println("Task deleted");
+            // User confirmed deletion, proceed to delete the task
+            for(Board board : boards){
+                if(board.getTasks().contains(task)){
+                    board.getTasks().remove(task);
+                    break;
+                }
+            }
+            boolean isDeleted = Database.deleteTask(task); // Delete the task from the database
+            if (isDeleted) {
+
+                System.out.println("Task deleted successfully.");
+                // Close the dialog
+                Stage stage = (Stage) cancelButton.getScene().getWindow();
+                stage.close();
+            } else {
+                // Show an error message if the task could not be deleted
+                System.out.println("Failed to delete the task.");
+            }
+        } else {
+            // User canceled the deletion
+            System.out.println("Deletion canceled.");
         }
     }
 
