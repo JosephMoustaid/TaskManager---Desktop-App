@@ -36,7 +36,7 @@
             <!-- Dynamic Board Buttons will be added here programmatically -->
 
             <!-- Settings Button with Icon -->
-            <Button fx:id="settingsButton" alignment="CENTER_RIGHT" onAction="#handleClickSettings" prefHeight="40.0" prefWidth="184.0" style="-fx-border-radius: 0;" styleClass="board-button" text="Settings" textFill="WHITE">
+            <Button fx:id="settingsButton" alignment="CENTER_RIGHT" onAction="#handleOpenUserInfoDialog" prefHeight="40.0" prefWidth="184.0" style="-fx-border-radius: 0;" styleClass="board-button" text="User info" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -87,9 +87,7 @@
          </graphic>
          <items>
             <!-- Example Notifications -->
-            <MenuItem text="Notification 1" />
-            <MenuItem text="Notification 2" />
-            <MenuItem text="Notification 3" />
+            <MenuItem text="You have no notifications !" />
          </items>
          <AnchorPane.rightAnchor>115.544885117045</AnchorPane.rightAnchor> <!-- Adjust position as needed -->
          <AnchorPane.topAnchor>12.0</AnchorPane.topAnchor>

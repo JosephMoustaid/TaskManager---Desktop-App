@@ -86,4 +86,9 @@ public class AuthManager {
             return null; // Return null if the file doesn't exist or cannot be read
         }
     }
+
+    public static void updateUser(User user) {
+        authenticatedUser = user;
+        saveUser(user);
+    }
 }

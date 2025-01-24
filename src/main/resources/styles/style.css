@@ -490,3 +490,52 @@ MenuButton {
 /* -----------------Add task----------------- */
 
 /* -----------------Edit task----------------- */
+
+
+/* -----------------User info----------------- */
+.user-info{
+    -fx-background-color: #333333;
+    -fx-fill: white;
+    -fx-alignment: center;
+    -fx-padding: 30 30;
+}
+.user-info VBox{
+    -fx-spacing: 10;
+    -fx-padding: 20 20;
+}
+
+
+/* styles.css */
+
+/* Apply white text color to all text inputs */
+.text-field, .choice-box, .date-picker {
+    -fx-text-fill: white;
+}
+
+/* Style the text inside DatePicker */
+.date-picker .text-field {
+    -fx-text-fill: white;
+}
+
+/* Style the dropdown arrow and text in ChoiceBox */
+.choice-box .label {
+    -fx-text-fill: white;
+}
+
+/* Style the dropdown menu in ChoiceBox */
+.choice-box .context-menu {
+    -fx-background-color: #333333; /* Background color of the dropdown */
+}
+
+.choice-box .menu-item .label {
+    -fx-text-fill: white; /* Text color of dropdown items */
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #555555; /* Background color of focused dropdown item */
+}
+
+/* Style the prompt text (hint text) */
+.text-input {
+    -fx-prompt-text-fill: gray;
+}

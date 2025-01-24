@@ -476,4 +476,52 @@ public class Database {
             return false;
         }
     }
+
+    public static int getMaxTaskId() {
+        int maxId = 0;
+        String query = "SELECT MAX(id) AS max_id FROM tasks"; // Adjust the table name if necessary
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            if (resultSet.next()) {
+                maxId = resultSet.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving max task ID: " + e.getMessage());
+        }
+
+        return maxId;
+    }
+
+
+
+    public static boolean updateUser( User user){
+        if (user == null) {
+            return false;
+        }
+
+        String query;
+
+        query = "UPDATE users SET email = ?, password = ? WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            // Set task details
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+
+            statement.setInt(3, Integer.parseInt(user.getId()));
+
+
+            // Execute the query
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0; // Return true if the operation was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

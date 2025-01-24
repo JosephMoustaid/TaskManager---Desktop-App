@@ -46,26 +46,11 @@
             </items>
         </ChoiceBox>
         <!-- ChoiceBox for Priority -->
-        <ChoiceBox fx:id="taskPriority" prefHeight="26.0" prefWidth="250.0" value="Medium">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="High" />
-                    <String fx:value="Medium" />
-                    <String fx:value="Low" />
-                </FXCollections>
-            </items>
-        </ChoiceBox>
+        <ChoiceBox fx:id="taskPriority" prefHeight="26.0" prefWidth="250.0" value="MEDIUM" />
+
 
         <!-- ChoiceBox for Status -->
-        <ChoiceBox fx:id="taskStatus" prefHeight="26.0" prefWidth="248.0" value="Not started yet">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="In progress" />
-                    <String fx:value="Done" />
-                    <String fx:value="Not started yet" />
-                </FXCollections>
-            </items>
-        </ChoiceBox>
+        <ChoiceBox fx:id="taskStatus" prefHeight="26.0" prefWidth="248.0" value="NOT_STARTED" />
 
         <Button onAction="#saveTask" styleClass="btn-primary" text="Save Task" textFill="WHITE" />
 

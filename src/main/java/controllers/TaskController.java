@@ -1,5 +1,7 @@
 package controllers;
 
+import TaskManager.Login;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -36,6 +38,9 @@ import models.User;
 import models.Board;
 
 import utils.Database;
+
+import TaskManager.Login;
+
 public class TaskController {
 
     @FXML
@@ -87,24 +92,24 @@ public class TaskController {
 
     @FXML
     public void initialize() {
-        // Verify the token when the main app loads
         if (!AuthManager.verifyToken(AuthManager.getToken())) {
             showAlert("Access Denied", "You are not signed in.");
-            closeWindow();
+
+            // Delay the window closure
+            Platform.runLater(() -> {
+                closeWindow(); // This will execute after the UI is fully initialized
+                openLoginWindow();
+            });
         } else {
-            // Get the authenticated user
+            // Rest of the logic for authenticated users
             connectedUser = AuthManager.getAuthenticatedUser();
             if (connectedUser != null) {
                 System.out.println("Authenticated User: " + connectedUser.getUsername());
                 System.out.println("Email: " + connectedUser.getEmail());
 
-                // Load boards for the connected user
                 loadBoardsForUser();
-
-                // Display boards in the sidebar
                 displayBoards();
 
-                // Display tasks for the first board by default
                 if (!boards.isEmpty()) {
                     displayTasksForBoard(boards.iterator().next());
                 }
@@ -113,7 +118,6 @@ public class TaskController {
             }
         }
     }
-
     private void loadBoardsForUser() {
         // Load all boards from the database
         Set<Board> allBoards = Database.loadBoards();
@@ -541,4 +545,68 @@ public class TaskController {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+    private void openLoginWindow() {
+        try {
+            Stage currentStage = (Stage) timeChunk1.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+
+            currentStage.setScene(scene);
+            currentStage.setTitle("Task Manager - Login");
+            currentStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/_51c75ae5-dbc9-4096-a010-a1357c9b9d94-removebg-preview.png")));
+            currentStage.setWidth(600);
+            currentStage.setHeight(400);
+            currentStage.setResizable(false);
+            currentStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void handleOpenUserInfoDialog() {
+        try {
+            // Load the FXML file for the dialog
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/UserInfoDialog.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller for the dialog
+            UserInfoDialogController controller = loader.getController();
+
+            // Create a new stage for the dialog
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Update User Information");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+
+
+            dialogStage.setResizable(false);
+
+            //dialogStage.setHeight(600);
+            // Set the dialog stage in the controller
+            controller.setDialogStage(dialogStage);
+
+            // Show the dialog and wait for the user to close it
+            dialogStage.showAndWait();
+
+            // Check if the user clicked Save
+            if (controller.isSaveClicked()) {
+                // Perform any necessary actions after saving (e.g., update UI or database)
+                System.out.println("User information updated.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+

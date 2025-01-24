@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -19,25 +18,28 @@
                 <Font size="19.0" />
             </font>
         </Label>
-        <TextField fx:id="taskTitle" promptText="Task Title" />
-        <TextField fx:id="taskDescription" promptText="Task Description" />
+        <TextField fx:id="taskTitle" promptText="Task Title" style="-fx-text-fill: white;" />
+        <TextField fx:id="taskDescription" promptText="Task Description" style="-fx-text-fill: white;" />
 
         <!-- Start Date and Time -->
-        <DatePicker fx:id="startDate" prefHeight="35.0" prefWidth="239.0" promptText="Start Date" />
-        <ChoiceBox fx:id="startTime" prefHeight="26.0" prefWidth="243.0" styleClass="cell" stylesheets="@../styles/style.css" />
+        <DatePicker fx:id="startDate" prefHeight="35.0" prefWidth="239.0" promptText="Start Date" style="-fx-text-fill: white;"/>
+        <ChoiceBox fx:id="startTime" prefHeight="26.0" prefWidth="243.0" styleClass="cell" stylesheets="@../styles/style.css" style="-fx-text-fill: white;"/>
 
         <!-- End Date and Time -->
-        <DatePicker fx:id="endDate" prefHeight="35.0" prefWidth="248.0" promptText="End Date" />
-        <ChoiceBox fx:id="endTime" prefHeight="26.0" prefWidth="245.0" styleClass="arrow" />
+        <DatePicker fx:id="endDate" prefHeight="35.0" prefWidth="248.0" promptText="End Date" style="-fx-text-fill: white;" />
+        <ChoiceBox fx:id="endTime" prefHeight="26.0" prefWidth="245.0" styleClass="arrow" style="-fx-text-fill: white;" />
 
         <!-- ChoiceBox for Priority -->
-        <ChoiceBox fx:id="taskPriority" prefHeight="26.0" prefWidth="250.0" />
+        <ChoiceBox fx:id="taskPriority" prefHeight="26.0" prefWidth="250.0" style="-fx-text-fill: white;" />
 
         <!-- ChoiceBox for Status -->
-        <ChoiceBox fx:id="taskStatus" prefHeight="26.0" prefWidth="248.0" />
+        <ChoiceBox fx:id="taskStatus" prefHeight="26.0" prefWidth="248.0"  style="-fx-text-fill: white;"/>
 
         <!-- Update Button -->
-        <Button fx:id="saveButton" onAction="#handleSave" styleClass="btn-primary" text="Update Task" textFill="WHITE" />
+        <Button fx:id="saveButton" onAction="#handleSave" styleClass="btn-primary" text="Update Task" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
     </VBox>
 
 </AnchorPane>
