@@ -32,7 +32,6 @@ import models.Task;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 import auth.AuthManager;
 import models.User;
 import models.Board;
@@ -42,6 +41,10 @@ import utils.Database;
 import TaskManager.Login;
 
 public class TaskController {
+
+
+    @FXML
+    private Button filterButton;
 
     @FXML
     private  Button cancelButton;
@@ -54,7 +57,6 @@ public class TaskController {
 
     private Set<Board> boards; // Stores all boards for the connected user
     private User connectedUser; // Stores the currently connected user
-
 
     @FXML
     private VBox timeChunk1; // 12 AM - 6 AM
@@ -88,8 +90,6 @@ public class TaskController {
         return dateTime;
     }
 
-
-
     @FXML
     public void initialize() {
         if (!AuthManager.verifyToken(AuthManager.getToken())) {
@@ -117,7 +117,11 @@ public class TaskController {
                 System.out.println("No authenticated user found.");
             }
         }
+
+        // Initialize filter button
+        filterButton.setOnAction(this::handleFilterClick);
     }
+
     private void loadBoardsForUser() {
         // Load all boards from the database
         Set<Board> allBoards = Database.loadBoards();
@@ -337,12 +341,16 @@ public class TaskController {
         description.setWrappingWidth(200); // Set a wrapping width for the description text
 
         // Format the start and end dates/times in a simple way
+
+        /*
         String dateTimeRange = formatDateTimeSimple(
                 task.getDateTime().get("startDate"),
                 task.getDateTime().get("startTime"),
                 task.getDateTime().get("endDate"),
                 task.getDateTime().get("endTime")
-        );
+        );*/
+
+        String dateTimeRange = formatDateTimeSimple(task.getDateTime());
 
         // Task Timestamp
         Text timestamp = new Text(dateTimeRange);
@@ -404,23 +412,47 @@ public class TaskController {
         return taskCard;
     }
 
+
     private String formatDateTimeSimple(Date startDate, Date startTime, Date endDate, Date endTime) {
         if (startDate == null || startTime == null || endDate == null || endTime == null) {
             return "N/A"; // Handle null dates/times gracefully
         }
 
-        // Format for date: "MMM dd"
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
-        // Format for time: "HH:mm"
+        // Format for date: "EEE, dd" (e.g., "Mon, 26")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd");
+        // Format for time: "HH:mm" (e.g., "02:00")
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         // Format start and end dates/times
-        String start = dateFormat.format(startDate) + " - " + timeFormat.format(startTime);
-        String end = dateFormat.format(endDate) + " - " + timeFormat.format(endTime);
+        String start = dateFormat.format(startDate) + " at " + timeFormat.format(startTime);
+        String end = dateFormat.format(endDate) + " at " + timeFormat.format(endTime);
 
         return start + " -> " + end;
     }
 
+    private String formatDateTimeSimple(Map<String, Date> dateTime) {
+        if (dateTime == null || dateTime.get("startDate") == null || dateTime.get("startTime") == null
+                || dateTime.get("endDate") == null || dateTime.get("endTime") == null) {
+            return "N/A"; // Handle null dates/times gracefully
+        }
+
+        // Format for date: "EEE, dd" (e.g., "Mon, 26")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd");
+        // Format for time: "HH:mm" (e.g., "02:00")
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        // Extract dates and times from the map
+        Date startDate = dateTime.get("startDate");
+        Date startTime = dateTime.get("startTime");
+        Date endDate = dateTime.get("endDate");
+        Date endTime = dateTime.get("endTime");
+
+        // Format start and end dates/times
+        String start = dateFormat.format(startDate) + " at " + timeFormat.format(startTime);
+        String end = dateFormat.format(endDate) + " at " + timeFormat.format(endTime);
+
+        return start + " -> " + end;
+    }
     @FXML
     public void handleTaskClick(MouseEvent event) {
         System.out.println("Task card clicked");
@@ -547,10 +579,6 @@ public class TaskController {
     }
 
 
-
-
-
-
     private void openLoginWindow() {
         try {
             Stage currentStage = (Stage) timeChunk1.getScene().getWindow();
@@ -569,7 +597,6 @@ public class TaskController {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void handleOpenUserInfoDialog() {
@@ -607,6 +634,68 @@ public class TaskController {
         }
     }
 
+    private List<Task> filterTasksByPriority(Priority priority) {
+        List<Task> filteredTasks = new ArrayList<>();
+        for (Board board : boards) {
+            for (Task task : board.getTasks()) {
+                if (task.getPriority() == priority) {
+                    filteredTasks.add(task);
+                }
+            }
+        }
+        return filteredTasks;
+    }
+
+    @FXML
+    private void handleFilterClick(ActionEvent event) {
+        // Example: Filter tasks by HIGH priority
+        List<Task> filteredTasks = filterTasksByPriority(Priority.HIGH);
+
+        // Clear all time chunks before adding filtered tasks
+        timeChunk1.getChildren().clear(); // Clear 12 AM - 6 AM
+        timeChunk2.getChildren().clear(); // Clear 6 AM - 12 PM
+        timeChunk3.getChildren().clear(); // Clear 12 PM - 6 PM
+        timeChunk4.getChildren().clear(); // Clear 6 PM - 12 AM
+
+        // Loop through each filtered task and add it to the appropriate time chunk
+        for (Task task : filteredTasks) {
+            Map<String, Date> dateTime = task.getDateTime();
+
+            // Debug: Print the task and its dateTime map
+            System.out.println("Task: " + task.getTitle());
+            System.out.println("DateTime: " + dateTime);
+
+            if (dateTime != null) {
+                System.out.println("startDate: " + dateTime.get("start_date"));
+                System.out.println("startTime: " + dateTime.get("start_time"));
+                System.out.println("endDate: " + dateTime.get("end_date"));
+                System.out.println("endTime: " + dateTime.get("end_time"));
+            }
+
+            Date startTime = dateTime != null ? dateTime.get("start_time") : null;
+
+            // Skip tasks with null startTime
+            if (startTime == null) {
+                System.out.println("Skipping task with null startTime: " + task.getTitle());
+                continue;
+            }
+
+            int hour = startTime.getHours();
+
+            // Debug: Print task details
+            System.out.println("Task: " + task.getTitle() + ", Start Time: " + startTime);
+
+            if (hour >= 0 && hour < 6) {
+                timeChunk1.getChildren().add(createTaskCard(task)); // Add to 12 AM - 6 AM
+            } else if (hour >= 6 && hour < 12) {
+                timeChunk2.getChildren().add(createTaskCard(task)); // Add to 6 AM - 12 PM
+            } else if (hour >= 12 && hour < 18) {
+                timeChunk3.getChildren().add(createTaskCard(task)); // Add to 12 PM - 6 PM
+            } else {
+                timeChunk4.getChildren().add(createTaskCard(task)); // Add to 6 PM - 12 AM
+            }
+        }
+    }
 }
 
 

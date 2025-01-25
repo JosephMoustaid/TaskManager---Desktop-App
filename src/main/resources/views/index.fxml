@@ -76,6 +76,15 @@
          <AnchorPane.topAnchor>10</AnchorPane.topAnchor> <!-- Anchored to the top -->
       </Button>
 
+      <Button fx:id="filterButton" layoutX="230.0" layoutY="11.0" onAction="#handleFilterClick" styleClass="btn-suceess shadow" text="Filter by High priority">
+         <AnchorPane.rightAnchor>310</AnchorPane.rightAnchor> <!-- Anchored to the right -->
+         <AnchorPane.topAnchor>10</AnchorPane.topAnchor>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor> <!-- Anchored to the top -->
+      </Button>
+
+
       <!-- Notification Dropdown -->
       <MenuButton layoutX="329.0" layoutY="12.0" styleClass="notification-button" text="Notifications" textFill="WHITE">
          <graphic>
@@ -95,7 +104,8 @@
             <Cursor fx:constant="HAND" />
          </cursor> <!-- Anchored to the top -->
       </MenuButton>
-      <!-- Timeline Header -->
+
+
 
       <!-- Tasks Grid -->
 
